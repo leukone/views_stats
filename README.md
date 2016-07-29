@@ -1,6 +1,6 @@
 # views_stats
 
-Solution to the Linear Regression with OLS task in main.m
+`Solution to the Linear Regression with OLS task in main.m
 solution done in matlab
 
 (1 !!) I subtracted first column (of string format) from csv data by hand, needs to be done automatically later
@@ -21,5 +21,5 @@ solution done in matlab
 	- 
 (10 !!) Final plot of mRSE in mRSE.png file. The multiple-input linear regression doesn't exactly look like expected,
 	 therefore solution needs a double check. One of the possibilities of such behaviour can be normal equation,
-	as elements in the matrix can be ~10^6, which makes inverting prone to numerical errors 
+	as elements in the matrix can be ~10^6, which makes inverting prone to numerical errors `
     
