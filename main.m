@@ -68,6 +68,7 @@ data = data(data(:,168)>exp(edge(1)) & data(:, 168)<exp(edge(2)), :);
 
 % MINIMIZE ORDINARY LEAST SQUARES
 % Randomly split dataset
+% k training samples, p - number of the output column in given dataset
 k = 24;
 p = 168;
 indices = randsample(1:length(data(:,1)), ceil(0.1*length(data(:,1))));
