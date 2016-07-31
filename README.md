@@ -25,5 +25,5 @@ Correlation coefficients saved to results.txt file, (with bad formatting, needs 
 ### 10.
 Final plot of mRSE in mRSE.png file. The multiple-input linear regression doesn't exactly look like expected,
 	 therefore solution needs a double check. One of the possibilities of such behaviour can be normal equation,
-	as elements in the matrix can be ~10^6, which makes inverting prone to numerical errors 
+	as elements in the matrix can be ~10^6, which makes inverting prone to numerical errors.
     
