@@ -6,14 +6,14 @@ data = csvread('Desktop\Tooploox\data.csv');
 glob_min = min(data(:));
 
 %BASIC VIEWS STATISTICS
-% exclude 0 from x axis in order to log-transform data
+% find global minimum and maximum, exclude 0 from x axis in order to log-transform data
 if glob_min == 0
     glob_min = 1;
 end    
 glob_max = max(data(:));
 count_views_stats([24, 72, 168], data, 'C:\Users\Ja\Desktop\Tooploox\results.txt'); 
 
-%DISTRIBUTION OF v(168)
+%PLOTTING DISTRIBUTION OF v(168)
 x = data(:, 168);
 % Main plot 
 figure;
@@ -28,7 +28,7 @@ set(handylabel1, 'FontSize', 11)
 title('Distribution of views(168)')
 grid on;
 
-% Place second set of axes on same plot
+% Place second set of axes on same plot, with log scale on x-axis to show gaussian curve
 [xx, nn] = hist(x, 500);
 handaxes2 = axes('Position', [0.43 0.55 0.45 0.35]);
 scatter(nn, xx, 4,'red', 'filled')
@@ -50,7 +50,7 @@ for i = 1:24
 end
 
 %remove outliers from dataset
-data = data(data(:,168)>exp(edge(1)) & data(:, 168)<exp(edge(2)), :);
+data = data(data(:,168) > exp(edge(1)) & data(:, 168) < exp(edge(2)), :);
 
 %save coefficients to results file
  [fid, msg] = fopen('C:\Users\Ja\Desktop\Tooploox\results.txt', 'a');
@@ -68,15 +68,16 @@ data = data(data(:,168)>exp(edge(1)) & data(:, 168)<exp(edge(2)), :);
 
 % MINIMIZE ORDINARY LEAST SQUARES
 % Randomly split dataset
-% k training samples, p - number of the output column in given dataset
+% k - number of training samples, p - id number of the output column in given dataset
 k = 24;
 p = 168;
+% choose randomly  10% of samples for a testing set ( by drawing indices of rows from dataset )
 indices = randsample(1:length(data(:,1)), ceil(0.1*length(data(:,1))));
 test_set = data(indices, :);
 [train_set, PS] = removerows(data, indices);
 mRSE = zeros(2, k);
 
-% minimizing cost functions
+% minimizing cost functions with normal equation
 for j = 1:k
     % training
     output = train_set(:, p);
@@ -102,7 +103,7 @@ end
 
 
 % PLOT mRSE
-figure(7)
+figure(3)
 scatter(1:1:k, mRSE(1,:), 50, 'blue', 'filled'); hold on;
 scatter(1:1:k, mRSE(2,:), 10, 'green', 'filled'); 
 plot(1:1:k,mRSE(1,:), '--', 'color', 'blue')
