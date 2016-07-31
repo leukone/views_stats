@@ -1,7 +1,7 @@
 # views_stats
 
 ## Solution to the Linear Regression with OLS task in main.m
-	solution done in matlab
+Solved in matlab.
 
 ### 1. 
 I subtracted first column (of string format) from csv data by hand, needs to be done automatically later
