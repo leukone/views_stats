@@ -1,3 +1,7 @@
+<snippet>
+  <content><![CDATA[
+# ${1:Project Name}
+
 # views_stats
 
 Solution to the Linear Regression with OLS task in main.m
@@ -23,3 +27,6 @@ solution done in matlab
 	 therefore solution needs a double check. One of the possibilities of such behaviour can be normal equation,
 	as elements in the matrix can be ~10^6, which makes inverting prone to numerical errors 
     
+]]></content>
+  <tabTrigger>readme</tabTrigger>
+</snippet>
