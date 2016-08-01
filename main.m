@@ -5,7 +5,7 @@
 data = csvread('Desktop\Tooploox\data.csv');
 glob_min = min(data(:));
 
-%BASIC VIEWS STATISTICS
+%================== 1: BASIC VIEWS STATISTICS========================
 % find global minimum and maximum, exclude 0 from x axis in order to log-transform data
 if glob_min == 0
     glob_min = 1;
@@ -13,7 +13,7 @@ end
 glob_max = max(data(:));
 count_views_stats([24, 72, 168], data, 'C:\Users\Ja\Desktop\Tooploox\results.txt'); 
 
-%PLOTTING DISTRIBUTION OF v(168)
+%================= 2: PLOTTING DISTRIBUTION OF v(168) ===================
 x = data(:, 168);
 % Main plot 
 figure;
@@ -28,6 +28,7 @@ set(handylabel1, 'FontSize', 11)
 title('Distribution of views(168)')
 grid on;
 
+%================= 3: PLOTTING DISTRIBUTION OF log-transformed v(168) ===============
 % Place second set of axes on same plot, with log scale on x-axis to show gaussian curve
 [xx, nn] = hist(x, 500);
 handaxes2 = axes('Position', [0.43 0.55 0.45 0.35]);
