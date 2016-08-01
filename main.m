@@ -38,10 +38,14 @@ ylabel('Number of films')
 set(handaxes2, 'Xscale', 'log');
 print('C:\Users\Ja\Desktop\Tooploox\lognorm_distr','-dpng')
 
-%CORRELATION COEFFICIENTS
-% Log-transform distribution v(168) and count correlation coefficients
+
+% Log-transform distribution v(168), remove outliers from dataset and count correlation coefficients
+%================= 4: REMOVING OUTLIERS FROM DATASET  ===============
 x_f = data(:,168);
 [x__, y__, edge_min, edge_max]=logtransformed(x_f, glob_min, glob_max); 
+data = data(data(:,168) > exp(edge_min) & data(:, 168) < exp(edge_max), :);
+
+%================= 5: CORRELATION COEFFICIENTS  ===============
 coefficients = zeros(24, 2, 2);
 size(coefficients);
 for i = 1:24
@@ -50,8 +54,6 @@ for i = 1:24
     coefficients(i, :, :) = corrcoef(y_, y__);
 end
 
-%remove outliers from dataset
-data = data(data(:,168) > exp(edge(1)) & data(:, 168) < exp(edge(2)), :);
 
 %save coefficients to results file
  [fid, msg] = fopen('C:\Users\Ja\Desktop\Tooploox\results.txt', 'a');
@@ -68,7 +70,7 @@ data = data(data(:,168) > exp(edge(1)) & data(:, 168) < exp(edge(2)), :);
 
 
 % MINIMIZE ORDINARY LEAST SQUARES
-% Randomly split dataset
+% =================== 6: SPLIT DATASET AT RANDOM ==================================
 % k - number of training samples, p - id number of the output column in given dataset
 k = 24;
 p = 168;
