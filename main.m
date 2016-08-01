@@ -69,7 +69,6 @@ end
   fclose(fid);
 
 
-% MINIMIZE ORDINARY LEAST SQUARES
 % =================== 6: SPLIT DATASET AT RANDOM ==================================
 % k - number of training samples, p - id number of the output column in given dataset
 k = 24;
@@ -80,12 +79,15 @@ test_set = data(indices, :);
 [train_set, PS] = removerows(data, indices);
 mRSE = zeros(2, k);
 
+% ===================== 7: MINIMIZE ORDINARY LEAST SQUARES ========================
 % minimizing cost functions with normal equation
 for j = 1:k
     % training
     output = train_set(:, p);
+    % ------> single column input
     [prediction_single, beta_t] =...
         count_prediction(train_set(:,j), train_set(:, p), false);
+    %------> 8: multiple input 
     [prediction_multi, beta_m] = ...
         count_prediction(train_set(:,1:j), train_set(:, p), false);
    
@@ -97,7 +99,7 @@ for j = 1:k
         count_prediction(test_set(:,1:j), test_set(:, p), beta_m);
     
     
-    % COMPUTING MEAN RELATIVE SQUARED ERROR
+    % ====================== 9: COMPUTING MEAN RELATIVE SQUARED ERROR==============
      var1 = rdivide(prediction_single-test_set(:, p), test_set(:, p)).^2;
      mRSE(1,j) = 1/numel(test_set)*sum(var1);
      var2 = (rdivide((prediction_multi-test_set(:, p)),test_set(:, p))).^2;
@@ -105,7 +107,7 @@ for j = 1:k
 end
 
 
-% PLOT mRSE
+% ======================== 10: PLOT mRSE ==================================
 figure(3)
 scatter(1:1:k, mRSE(1,:), 50, 'blue', 'filled'); hold on;
 scatter(1:1:k, mRSE(2,:), 10, 'green', 'filled'); 
