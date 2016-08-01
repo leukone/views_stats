@@ -83,13 +83,13 @@ mRSE = zeros(2, k);
 % minimizing cost functions with normal equation
 for j = 1:k
     % training
-    output = train_set(:, p);
+    output_training = train_set(:, p);
     % ------> single column input
-    [prediction_single, beta_t] =...
-        count_prediction(train_set(:,j), train_set(:, p), false);
+    [prediction_single_training, beta_t] =...
+        count_prediction(train_set(:,j), output_training, false);
     %------> 8: multiple input 
-    [prediction_multi, beta_m] = ...
-        count_prediction(train_set(:,1:j), train_set(:, p), false);
+    [prediction_multi_trainint, beta_m] = ...
+        count_prediction(train_set(:,1:j), output_training, false);
    
     %testing
     output = test_set(:, p);
@@ -119,7 +119,3 @@ xlabel('Reference time')
 ylabel('mRSE')
 grid on;
 print('C:\Users\Ja\Desktop\Tooploox\mRSE','-dpng')
-
-
-
-
