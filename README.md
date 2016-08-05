@@ -4,7 +4,7 @@
 Solved in matlab.
 
 ### 1. 
-I subtracted first column (of string format) from csv data with python script remove_string_columns.py.
+I subtracted first column (of string format) from csv data with python script remove_string_column.py.
     Basic statistics of v(168):
     
     n     | range       | mean      | standard deviation  | variance        | min      |  max
