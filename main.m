@@ -38,7 +38,7 @@ print('lognorm_distr','-dpng')
 
 % Distribution of log-transformed v(168), remove outliers from nominal data and count correlation coefficients
 %================= 4: REMOVING OUTLIERS FROM DATASET  ===============
-data_temp = data
+data_temp = data;
 data_temp(data_temp == 0) = eps;
 x_f = log(data_temp(:,168));
 mean_ = mean(x_f);
@@ -50,11 +50,11 @@ data_log = data_log(mask, :);
 data = data(mask, :);
 
 %================= 5: CORRELATION COEFFICIENTS  ===============
-coefficients = zeros(24, 2);
-coefficients(:,1) = 1:1:24;
-disp(['Linear correlation coefficient between logtransformed distributions ' ...
-' of v(n) and v(168)'])
-coefficients(:,2) = corr(data_log(:, 1:24), data_log(:, 168)) 
+n = (1:1:24)';
+disp(['Linear correlation coefficient between logtransformed  ' ...
+'  v(n) and v(168)'])
+coefficients = corr(data_log(:, 1:24), data_log(:, 168));
+disp(table(n, coefficients))
 
  
 % =================== 6: SPLIT DATASET AT RANDOM ==================================
@@ -72,26 +72,25 @@ mRSE = zeros(2, k);
 for j = 1:k
     % training
     output_training = train_set(:, p);
+    output = test_set(:, p);
     % ------> single column input
     [prediction_single_training, beta_t] =...
         count_prediction(train_set(:,j), output_training, false);
-    %------> 8: multiple input 
-    [prediction_multi_trainint, beta_m] = ...
-        count_prediction(train_set(:,1:j), output_training, false);
-   
     %testing
-    output = test_set(:, p);
-    [prediction_single, beta_t] = ...
-        count_prediction(test_set(:,j), test_set(:, p), beta_t);
-    [prediction_multi, beta_m] = ...
-        count_prediction(test_set(:,1:j), test_set(:, p), beta_m);
-    
+    [prediction_single, null] = ...
+        count_prediction(test_set(:,j), output, beta_t);
+    %------> 8: multiple input 
+    [prediction_multi_training, beta_m] = ...
+    count_prediction(train_set(:,1:j), output_training, false);
+    %testing
+    [prediction_multi, null] = ...
+    count_prediction(test_set(:,1:j), output, beta_m);
     
     % ====================== 9: COMPUTING MEAN RELATIVE SQUARED ERROR==============
-     var1 = rdivide(prediction_single-test_set(:, p), test_set(:, p)).^2;
-     mRSE(1,j) = 1/numel(test_set)*sum(var1);
+     var1 = (rdivide(prediction_single-test_set(:, p), test_set(:, p))).^2;
+     mRSE(1,j) = 1/numel(test_set(:,1))*sum(var1);
      var2 = (rdivide((prediction_multi-test_set(:, p)),test_set(:, p))).^2;
-     mRSE(2,j) = 1/numel(test_set)*sum(var2);
+     mRSE(2,j) = 1/numel(test_set(:,1))*sum(var2);
 end
 
 
